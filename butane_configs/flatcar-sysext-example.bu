@@ -1,0 +1,26 @@
+variant: flatcar
+version: 1.0.0
+storage:
+  files:
+    # Configure systemd-sysext to find our PyPy extension
+    - path: /etc/flatcar/sysext.conf.d/pypy.conf
+      mode: 0644
+      contents:
+        # IMPORTANT: Update URL and SHA256Sum after building/releasing!
+        inline: |
+          [Sysext]
+          Name=pypy
+          URL=PLACEHOLDER_GITHUB_RELEASE_RAW_URL
+          SHA256Sum=PLACEHOLDER_SHA256_HASH
+  systemd:
+    units:
+      # Ensure the systemd-sysext service is enabled
+      - name: systemd-sysext.service
+        enabled: true
+passwd:
+  users:
+    - name: core
+      # Replace with your actual SSH public key
+      ssh_authorized_keys:
+        - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICqRf5540BwC7YKjnhyiZoKge8bsDXPfAKRjneaW+gUd itaymaoz@gmail.com"
+# Add other configs (network, etc.) if needed
